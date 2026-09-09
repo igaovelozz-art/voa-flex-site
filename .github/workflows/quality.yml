@@ -1,0 +1,36 @@
+name: Qualidade
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validar site
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v7
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          package-manager-cache: false
+
+      - name: Instalar dependências reproduzíveis
+        run: npm ci --ignore-scripts
+
+      - name: Validar e preparar o pacote do Render
+        run: npm run render:verify

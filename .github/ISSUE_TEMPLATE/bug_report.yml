@@ -1,0 +1,43 @@
+name: Relatar problema
+description: Informe um erro reproduzível no site VOA FLEX.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Não inclua dados pessoais, códigos de pacotes ou credenciais.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problema
+      description: O que aconteceu e o que deveria acontecer?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Como reproduzir
+      placeholder: "1. Acesse...\n2. Clique...\n3. Observe..."
+    validations:
+      required: true
+  - type: dropdown
+    id: device
+    attributes:
+      label: Dispositivo
+      options:
+        - Celular
+        - Tablet
+        - Computador
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Navegador e versão
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidência sem dados pessoais
+      description: Inclua uma captura somente se ela não expuser dados sensíveis.

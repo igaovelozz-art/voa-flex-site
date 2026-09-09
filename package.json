@@ -1,0 +1,21 @@
+{
+  "name": "voa-flex-site",
+  "version": "2.1.0",
+  "private": true,
+  "description": "Site institucional e comercial da transportadora VOA FLEX.",
+  "type": "module",
+  "scripts": {
+    "serve": "node scripts/serve.mjs",
+    "serve:render": "node scripts/serve.mjs --root=render-dist",
+    "validate": "node scripts/validate-site.mjs",
+    "render:config": "node scripts/validate-render.mjs",
+    "render:build": "node scripts/render-build.mjs",
+    "render:verify": "npm run check && npm run render:config && npm run render:build",
+    "test": "node --test",
+    "check": "npm run validate && npm test"
+  },
+  "engines": {
+    "node": ">=24.14.1 <25"
+  },
+  "license": "UNLICENSED"
+}
