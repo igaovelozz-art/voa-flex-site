@@ -15,6 +15,37 @@ function openWhatsApp(message, source){analytics('whatsapp_click',{source});if(!
 $$('.js-whatsapp').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();openWhatsApp(a.dataset.message||'Olá! Gostaria de falar com a VOA FLEX.',a.textContent.trim())}));
 const menuBtn=$('.menu-btn'), nav=$('.nav');menuBtn?.addEventListener('click',()=>{const open=nav.classList.toggle('open');menuBtn.setAttribute('aria-expanded',open);document.body.classList.toggle('menu-open',open)});$$('.nav a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menuBtn?.setAttribute('aria-expanded','false');document.body.classList.remove('menu-open')}));
 
+const faqSearch=$('#faqSearch'),faqItems=$$('details');
+if(faqSearch&&faqItems.length){
+  const filterFaq=()=>{
+    const query=faqSearch.value.trim().toLowerCase();
+    if(!query){faqItems.forEach(detail=>{detail.hidden=false;detail.open=false});return}
+    faqItems.forEach(detail=>{
+      const text=(detail.textContent||'').replace(/\s+/g,' ').trim().toLowerCase();
+      const match=text.includes(query);
+      detail.hidden=!match;
+      if(match)detail.open=true;
+    })
+  };
+  faqSearch.addEventListener('input',filterFaq);
+}
+
+const backToTop=$('#backToTop');
+if(backToTop){
+  const toggleBackToTop=()=>backToTop.classList.toggle('visible',window.scrollY>420);
+  toggleBackToTop();
+  addEventListener('scroll',toggleBackToTop,{passive:true});
+  backToTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+}
+
+const leadForm=$('#leadForm');
+function saveLeadDraft(){if(!leadForm)return;const formData=Object.fromEntries(new FormData(leadForm).entries());localStorage.setItem('voaLeadDraft',JSON.stringify(formData));}
+function restoreLeadDraft(){if(!leadForm)return;try{const raw=localStorage.getItem('voaLeadDraft');if(!raw)return;const saved=JSON.parse(raw);if(!saved||typeof saved!=='object')return;Object.entries(saved).forEach(([name,value])=>{const field=leadForm.elements.namedItem(name);if(field&&typeof field.value!=='undefined')field.value=value;})}catch(error){localStorage.removeItem('voaLeadDraft')}}
+leadForm?.addEventListener('input',saveLeadDraft);
+leadForm?.addEventListener('change',saveLeadDraft);
+leadForm?.addEventListener('submit',()=>localStorage.removeItem('voaLeadDraft'));
+restoreLeadDraft();
+
 const motionGroups=[
   '.problem-grid.reveal',
   '.standard-grid.reveal',

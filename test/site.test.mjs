@@ -98,6 +98,13 @@ test('mantém headers de produção no Blueprint', () => {
   }
 });
 
+test('mantém recursos essenciais de conversão e UX', () => {
+  assert.match(index, /id="faqSearch"/);
+  assert.match(index, /id="backToTop"/);
+  assert.match(app, /localStorage\.setItem\('voaLeadDraft'|localStorage\.setItem\("voaLeadDraft"/);
+  assert.match(app, /faqSearch/);
+});
+
 test('remove JavaScript executável inline da página de obrigado', () => {
   assert.doesNotMatch(thankYou, /<script(?![^>]*\bsrc=)[^>]*>/i);
   assert.match(thankYou, /<script\s+defer\s+src="\/obrigado\.js"><\/script>/i);
