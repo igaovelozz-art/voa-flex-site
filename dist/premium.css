@@ -2163,3 +2163,42 @@ footer {
     animation: none !important;
   }
 }
+
+/* Premium motion layer: quiet depth, clear hierarchy, and accessible fallbacks. */
+.motion-ready .premium-hero .hero-copy.visible .eyebrow{animation:heroKicker .8s var(--motion-spring) both}
+.motion-ready .premium-hero .hero-copy.visible h1{animation:heroTitle .9s .08s var(--motion-spring) both}
+.motion-ready .premium-hero .hero-copy.visible>p{animation:heroCopy .8s .18s var(--motion-ease) both}
+.motion-ready .premium-hero .hero-copy.visible .hero-line{animation:heroCopy .8s .26s var(--motion-ease) both}
+.motion-ready .premium-hero .hero-copy.visible .hero-actions{animation:heroCopy .8s .34s var(--motion-ease) both}
+.motion-ready .premium-hero .hero-copy.visible .hero-commercial{animation:heroCopy .8s .4s var(--motion-ease) both}
+.motion-ready .premium-hero .hero-copy.visible .trust-row{animation:heroCopy .8s .46s var(--motion-ease) both}
+.motion-ready .premium-hero .hero-visual.visible{animation:heroVisualIn 1.1s .18s var(--motion-spring) both}
+.premium-hero .hero-glow{animation:heroGlow 18s ease-in-out infinite alternate}
+.premium-map:before{content:"";position:absolute;z-index:1;inset:-30%;background:conic-gradient(from 210deg,transparent 0 38%,rgba(255,154,85,.1) 45%,transparent 54% 100%);animation:mapSweep 12s linear infinite;pointer-events:none}
+.premium-map .map-head{position:relative;z-index:5}
+.premium-map .operation-card{animation:operationBreath 5s ease-in-out infinite}
+.premium-map .status i{animation:statusPing 2.2s ease-out infinite}
+.section-head.visible .kicker,.section-head.visible .kicker.light{animation:kickerReveal .7s var(--motion-spring) both}
+.section-head.visible h2{animation:sectionTitle .8s .08s var(--motion-spring) both}
+.section-head.visible>p{animation:sectionCopy .7s .16s var(--motion-ease) both}
+.decision-grid{animation:surfaceLift .8s .12s var(--motion-spring) both}
+.channels-shell,.diagnostic-card,.calc-card,.lead-form,.founders-card,.select-shell,.circle-card{will-change:transform;transition:transform .5s var(--motion-ease),box-shadow .5s var(--motion-ease)}
+.channels-shell:hover,.diagnostic-card:hover,.calc-card:hover,.lead-form:hover,.founders-card:hover,.select-shell:hover,.circle-card:hover{transform:translateY(-4px);box-shadow:0 34px 90px rgba(7,25,45,.18)}
+.simple-card,.legal-content{animation:surfaceLift .8s var(--motion-spring) both}
+@keyframes heroKicker{from{opacity:0;transform:translateY(12px);letter-spacing:.24em}to{opacity:1;transform:none;letter-spacing:.13em}}
+@keyframes heroTitle{from{opacity:0;transform:translateY(22px) scale(.98);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
+@keyframes heroCopy{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes heroVisualIn{from{opacity:0;transform:translate3d(28px,18px,0) scale(.96)}to{opacity:1;transform:none}}
+@keyframes heroGlow{from{transform:translate3d(0,0,0) rotate(0deg);opacity:.7}to{transform:translate3d(-35px,24px,0) rotate(12deg);opacity:1}}
+@keyframes mapSweep{to{transform:rotate(360deg)}}
+@keyframes operationBreath{0%,100%{box-shadow:0 12px 28px rgba(0,0,0,.18)}50%{box-shadow:0 18px 38px rgba(255,106,0,.16)}}
+@keyframes statusPing{0%{box-shadow:0 0 0 0 rgba(34,197,94,.55)}70%{box-shadow:0 0 0 8px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+@keyframes kickerReveal{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:none}}
+@keyframes sectionTitle{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes sectionCopy{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes surfaceLift{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){
+  .motion-ready .premium-hero .hero-copy.visible>* ,.motion-ready .premium-hero .hero-visual.visible,.section-head.visible .kicker,.section-head.visible h2,.section-head.visible>p,.decision-grid,.simple-card,.legal-content{animation:none!important}
+  .premium-hero .hero-glow,.premium-map:before,.premium-map .operation-card,.premium-map .status i{animation:none!important}
+  .channels-shell:hover,.diagnostic-card:hover,.calc-card:hover,.lead-form:hover,.founders-card:hover,.select-shell:hover,.circle-card:hover{transform:none;box-shadow:inherit}
+}

@@ -65,6 +65,14 @@ test('consulta CEP na ViaCEP e prepara endereço para o comercial', () => {
   assert.match(renderBlueprint, /connect-src 'self' https:\/\/viacep\.com\.br/);
 });
 
+test('mantém o sistema de animações premium e acessível', () => {
+  assert.match(app, /prefers-reduced-motion/);
+  const premium = readFileSync('dist/premium.css', 'utf8');
+  assert.match(premium, /@keyframes heroTitle/);
+  assert.match(premium, /@keyframes mapSweep/);
+  assert.match(premium, /@media \(prefers-reduced-motion: reduce\)/);
+});
+
 test('publica somente o diretório estático esperado', () => {
   assert.equal(hosting.static?.directory, 'dist');
 });
