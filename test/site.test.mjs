@@ -27,9 +27,12 @@ test('mantém as regras comerciais públicas', () => {
   assert.doesNotMatch(index, /R\$\s*7,50/i);
 });
 
-test('não inventa um telefone comercial', () => {
-  assert.match(app, /const WHATSAPP_NUMBER = '';/);
-  assert.doesNotMatch(app, /wa\.me\/\d{10,}/);
+test('publica contato comercial real e profissional', () => {
+  assert.match(app, /const WHATSAPP_NUMBER = '5511966750618';/);
+  assert.match(index, /https:\/\/www\.instagram\.com\/voaflex_\//i);
+  assert.match(index, /11\D*96675-0618/i);
+  assert.match(index, /voaflex2026@gmail\.com/i);
+  assert.match(app, /WHATSAPP_NUMBER\.replace/);
 });
 
 test('declara as simulações fotográficas com transparência', () => {

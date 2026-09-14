@@ -1,4 +1,4 @@
-const WHATSAPP_NUMBER = '';
+const WHATSAPP_NUMBER = '5511966750618';
 const sendLeadButton = document.querySelector('#sendLead');
 
 async function copyLeadMessage(message) {

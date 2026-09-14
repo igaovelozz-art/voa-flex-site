@@ -1,4 +1,4 @@
-const WHATSAPP_NUMBER = '';
+const WHATSAPP_NUMBER = '5511966750618';
 const $ = (s, root=document) => root.querySelector(s);
 const $$ = (s, root=document) => [...root.querySelectorAll(s)];
 document.documentElement.classList.add('motion-ready');
@@ -97,7 +97,34 @@ $('#leadForm')?.addEventListener('submit',e=>{
   btn.classList.add('loading');
   btn.disabled=true;
   analytics('lead_form_submit',{marketplace:data.marketplace});
-  const message=`Olá! Quero solicitar a análise de entrada da minha operação na VOA FLEX.\nNome: ${data.nome}\nLoja: ${data.loja}\nWhatsApp: ${data.whatsapp}\nE-mail: ${data.email}\nCEP/Bairro: ${data.cep} — ${data.bairro}\nMarketplace: ${data.marketplace}\nPacotes/dia: ${data.pacotes}\nDias de operação: ${data.dias_operacao}\nHorário de corte atual: ${data.cutoff}\nTransportadora atual: ${data.transportadora||'Não informado'}\nPrincipal dificuldade: ${data.problema}\nVolume para piloto: ${data.volume_teste}\nMelhor horário: ${data.horario}`;
+  const message=`*SOLICITAÇÃO DE ENTRADA | VOA FLEX*
+
+Olá! Quero solicitar uma análise comercial para a minha operação.
+
+*DADOS DO SELLER*
+Nome: ${data.nome}
+Loja: ${data.loja}
+WhatsApp: ${data.whatsapp}
+E-mail: ${data.email}
+
+*DADOS DA OPERAÇÃO*
+CEP de coleta: ${data.cep}
+Bairro: ${data.bairro}
+Marketplace: ${data.marketplace}
+Pacotes por dia: ${data.pacotes}
+Dias de operação: ${data.dias_operacao}
+Horário de corte atual: ${data.cutoff}
+Transportadora atual: ${data.transportadora||'Não informado'}
+
+*CENÁRIO E OBJETIVO*
+Principal dificuldade: ${data.problema}
+Volume desejado para piloto: ${data.volume_teste} pacotes
+Melhor horário para contato: ${data.horario}
+
+*PRÓXIMO PASSO*
+Gostaria de validar a aderência, a cobertura e a capacidade para começar com segurança.
+
+Aguardo o retorno da equipe VOA FLEX.`;
   sessionStorage.setItem('voaLeadMessage',message);
   setTimeout(()=>{
     btn.classList.remove('loading');
