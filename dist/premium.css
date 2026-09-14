@@ -1605,6 +1605,24 @@ body {
   box-shadow: 0 30px 90px rgba(0, 0, 0, .27);
 }
 
+.cep-status {
+  min-height: 18px;
+  margin: -7px 0 12px;
+  color: #7c91a3;
+  font-size: .72rem;
+}
+
+.cep-status.loading { color: #f3a44a; }
+.cep-status.success { color: #43c18a; }
+.cep-status.error { color: #ff8f76; }
+.address-hint {
+  align-self: end;
+  padding: 0 0 15px;
+  color: #7c91a3;
+  font-size: .7rem;
+  line-height: 1.5;
+}
+
 .final-cta {
   position: relative;
   overflow: hidden;

@@ -785,9 +785,18 @@
             <label>WhatsApp<input name="whatsapp" required inputmode="tel" autocomplete="tel" placeholder="(11) 99999-9999"></label>
             <label>E-mail<input name="email" type="email" required autocomplete="email"></label>
           </div>
-          <div class="two">
-            <label>CEP de coleta<input name="cep" required inputmode="numeric" maxlength="9" autocomplete="postal-code" placeholder="00000-000"></label>
-            <label>Bairro<input name="bairro" required></label>
+          <div class="two cep-row">
+            <label>CEP de coleta<input name="cep" required inputmode="numeric" maxlength="9" autocomplete="postal-code" placeholder="00000-000" aria-describedby="cepStatus"></label>
+            <label>Bairro<input name="bairro" required autocomplete="address-level3"></label>
+          </div>
+          <div class="cep-status" id="cepStatus" data-cep-status aria-live="polite"></div>
+          <div class="two address-row">
+            <label>Logradouro<input name="logradouro" readonly autocomplete="street-address"></label>
+            <label>Cidade<input name="cidade" readonly autocomplete="address-level2"></label>
+          </div>
+          <div class="two address-row">
+            <label>UF<input name="uf" readonly autocomplete="address-level1" maxlength="2"></label>
+            <span class="address-hint">O endereço é preenchido automaticamente após a consulta do CEP.</span>
           </div>
           <div class="two">
             <label>Marketplace<select name="marketplace" required><option value="">Selecione</option><option>Shopee</option><option>Mercado Livre</option><option>Ambos</option><option>Amazon</option><option>TikTok Shop</option><option>Magalu</option><option>E-commerce próprio</option><option>Outro</option></select></label>

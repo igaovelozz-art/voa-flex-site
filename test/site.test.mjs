@@ -56,6 +56,15 @@ test('formulário de entrada coleta os dados operacionais necessários', () => {
   }
 });
 
+test('consulta CEP na ViaCEP e prepara endereço para o comercial', () => {
+  assert.match(index, /name="cep"[\s\S]*aria-describedby="cepStatus"/);
+  for (const field of ['logradouro', 'bairro', 'cidade', 'uf']) assert.match(index, new RegExp(`name="${field}"`));
+  assert.match(app, /https:\/\/viacep\.com\.br\/ws\/\$\{cep\}\/json/);
+  assert.match(app, /CEP não encontrado/);
+  assert.match(app, /Logradouro: \$\{data\.logradouro/);
+  assert.match(renderBlueprint, /connect-src 'self' https:\/\/viacep\.com\.br/);
+});
+
 test('publica somente o diretório estático esperado', () => {
   assert.equal(hosting.static?.directory, 'dist');
 });

@@ -82,6 +82,14 @@ $$('.volume-options button').forEach(btn=>btn.addEventListener('click',()=>{$$('
 
 function maskCep(input){input.addEventListener('input',()=>{const d=input.value.replace(/\D/g,'').slice(0,8);input.value=d.length>5?`${d.slice(0,5)}-${d.slice(5)}`:d})}$$('input[name="cep"]').forEach(maskCep);
 
+const cepInput=$('input[name="cep"]'),cepStatus=$('[data-cep-status]'),cepFields={bairro:$('input[name="bairro"]'),logradouro:$('input[name="logradouro"]'),cidade:$('input[name="cidade"]'),uf:$('input[name="uf"]')};
+let cepLookupTimer=0,cepRequest=0;
+function setCepStatus(type,message){if(!cepStatus)return;cepStatus.className=`cep-status ${type}`;cepStatus.textContent=message}
+function clearCepAddress(){Object.values(cepFields).forEach(field=>{if(field)field.value=''})}
+function setAddressEditable(editable){['logradouro','cidade','uf'].forEach(name=>cepFields[name]?.toggleAttribute('readonly',!editable))}
+async function lookupCep(){const cep=cepInput?.value.replace(/\D/g,'');if(!cep||cep.length!==8){clearCepAddress();setAddressEditable(false);setCepStatus('',cep?'Digite um CEP válido com 8 números.':'');return}const request=++cepRequest;setAddressEditable(false);setCepStatus('loading','Consultando endereço...');try{const response=await fetch(`https://viacep.com.br/ws/${cep}/json/`,{headers:{Accept:'application/json'}});if(!response.ok)throw new Error('network');const address=await response.json();if(request!==cepRequest)return;if(address.erro){clearCepAddress();setAddressEditable(true);setCepStatus('error','CEP não encontrado. Confira os números e preencha o endereço.');analytics('cep_lookup_error',{reason:'not_found'});return}Object.entries(cepFields).forEach(([name,field])=>{if(field)field.value=address[name]||''});setCepStatus('success',`${address.localidade || 'Endereço'}${address.uf?` - ${address.uf}`:''} encontrado.`);analytics('cep_lookup_complete',{uf:address.uf||''})}catch(error){if(request!==cepRequest)return;setAddressEditable(true);setCepStatus('error','Não foi possível consultar o CEP agora. Preencha o endereço manualmente.');analytics('cep_lookup_error',{reason:'request_failed'})}}
+cepInput?.addEventListener('input',()=>{window.clearTimeout(cepLookupTimer);const digits=cepInput.value.replace(/\D/g,'');if(digits.length===8)cepLookupTimer=window.setTimeout(lookupCep,250);else{clearCepAddress();setCepStatus('',digits?'Digite um CEP válido com 8 números.':'')}});cepInput?.addEventListener('blur',lookupCep);
+
 $('#coverageForm')?.addEventListener('submit',e=>{e.preventDefault();const form=e.currentTarget;if(!form.reportValidity())return;const btn=$('button[type="submit"]',form),out=$('.form-result',form),data=Object.fromEntries(new FormData(form));btn.classList.add('loading');btn.disabled=true;analytics('coverage_check_start',{marketplace:data.marketplace});setTimeout(()=>{btn.classList.remove('loading');btn.disabled=false;out.innerHTML='<strong>Análise preliminar concluída.</strong><br>Os dados estão prontos para validação. A cobertura final depende da equipe VOA. <button type="button" class="inline-wa">Preparar mensagem comercial →</button>';out.classList.add('show');$('.inline-wa',out).addEventListener('click',()=>openWhatsApp(`Olá! Quero validar a cobertura da VOA.\nLoja: ${data.loja}\nCEP: ${data.cep}\nBairro: ${data.bairro}\nVolume/dia: ${data.volume}\nMarketplace: ${data.marketplace}`,'consulta_cobertura'));analytics('coverage_check_complete')},650)});
 
 const daily=$('#daily'),shopee=$('#shopeePct'),ml=$('#mlPct'),days=$('#days');
@@ -110,6 +118,8 @@ E-mail: ${data.email}
 *DADOS DA OPERAÇÃO*
 CEP de coleta: ${data.cep}
 Bairro: ${data.bairro}
+Logradouro: ${data.logradouro||'Não informado'}
+Cidade/UF: ${data.cidade||'Não informado'}${data.uf?` / ${data.uf}`:''}
 Marketplace: ${data.marketplace}
 Pacotes por dia: ${data.pacotes}
 Dias de operação: ${data.dias_operacao}
